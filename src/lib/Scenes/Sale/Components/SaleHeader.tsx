@@ -9,6 +9,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { CaretButton } from "../../../Components/Buttons/CaretButton"
 import OpaqueImageView from "../../../Components/OpaqueImageView/OpaqueImageView"
 import { navigate } from "../../../navigation/navigate"
+import { useTracking } from "react-tracking"
 
 export const COVER_IMAGE_HEIGHT = 260
 
@@ -19,6 +20,12 @@ interface Props {
 
 export const SaleHeader: React.FC<Props> = ({ sale, scrollAnim }) => {
   const saleTimeDetails = saleTime(sale)
+  const { trackEvent } = useTracking()
+
+  trackEvent({
+    auction_slug: sale.slug,
+    name: "Auctions Pageview",
+  })
 
   return (
     <>

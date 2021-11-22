@@ -44,19 +44,20 @@ private struct BottomArtwork: SwiftUI.View {
         let artworkTitle = artwork.title
         let artworkUrl = ArtworkUrl.from(slug: artwork.id)
         
-        VStack() {
-            Image(uiImage: artworkImage)
-                .resizable()
-                .scaledToFit()
-            Spacer()
-            PrimaryText(name: artistName)
-                .lineLimit(1)
-                .frame(maxWidth: .infinity, alignment: .leading)
-            SecondaryText(title: artworkTitle)
-                .lineLimit(2)
-                .frame(maxWidth: .infinity, alignment: .leading)
+        Link(destination: artworkUrl) {
+            VStack() {
+                Image(uiImage: artworkImage)
+                    .resizable()
+                    .scaledToFit()
+                Spacer()
+                PrimaryText(name: artistName)
+                    .lineLimit(1)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                SecondaryText(title: artworkTitle)
+                    .lineLimit(2)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
         }
-        .widgetURL(artworkUrl)
     }
 }
 

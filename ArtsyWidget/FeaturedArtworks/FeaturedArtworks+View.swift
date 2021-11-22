@@ -4,45 +4,23 @@ import WidgetKit
 
 extension FeaturedArtworks {
     struct View: SwiftUI.View {
-        static let supportedFamilies: [WidgetFamily] = [.systemLarge]
+        static let supportedFamilies: [WidgetFamily] = [.systemSmall, .systemMedium, .systemLarge]
+        
+        @Environment(\.widgetFamily) var family: WidgetFamily
         
         let entry: Entry
         
-        var artwork: Artwork {
-            return entry.artwork
-        }
-        
         var body: some SwiftUI.View {
-            let artworkImage = artwork.image!
-            let artistName = artwork.artist.name
-            let artworkTitle = artwork.title
-            let artworkUrl = ArtworkUrl.from(slug: artwork.id)
-            
-            GeometryReader { geo in
-                ZStack() {
-                    Image(uiImage: artworkImage)
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: geo.size.width, height: geo.size.height, alignment: .top)
-                    VStack() {
-                        Spacer()
-                        VStack() {
-                            PrimaryText(name: artistName, color: .white)
-                                .lineLimit(1)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                            SecondaryText(title: artworkTitle, color: .white)
-                                .lineLimit(1)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                        }
-                        .padding([.leading, .trailing, .bottom], 10)
-                    }
-                    .widgetURL(artworkUrl)
-                }
+            switch family {
+            case .systemMedium:
+                FeaturedArtworks.MediumView(entry: entry)
+            case .systemLarge:
+                FeaturedArtworks.LargeView(entry: entry)
+            default:
+                FeaturedArtworks.SmallView(entry: entry)
             }
         }
     }
-    
-    
 }
 
 struct FeaturedArtworks_View_Previews: PreviewProvider {

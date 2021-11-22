@@ -1,21 +1,57 @@
-//
-//  FeaturedArtworks+SmallView.swift
-//  ArtsyWidgetExtension
-//
-//  Created by Jonathan Allured on 11/22/21.
-//  Copyright © 2021 Artsy. All rights reserved.
-//
-
 import SwiftUI
+import WidgetKit
 
-struct FeaturedArtworks_SmallView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+extension FeaturedArtworks {
+    struct SmallView: SwiftUI.View {
+        static let supportedFamilies: [WidgetFamily] = [.systemSmall]
+        
+        let entry: Entry
+        
+        var artwork: Artwork {
+            return entry.artworks.first!
+        }
+        
+        var body: some SwiftUI.View {
+            let artsyLogo = UIImage(named: "BlackArtsyLogo")!
+            
+            let artworkImage = artwork.image!
+            let artistName = artwork.artist.name
+            
+            let artworkUrl = ArtworkUrl.from(slug: artwork.id)
+            
+            VStack() {
+                HStack(alignment: .top) {
+                    Image(uiImage: artworkImage)
+                        .resizable()
+                        .scaledToFit()
+                    Spacer()
+                    Image(uiImage: artsyLogo)
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                }
+                .padding([.top, .leading, .trailing], 10)
+                Spacer()
+                PrimaryText(name: artistName)
+                    .lineLimit(1)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding([.bottom, .leading, .trailing], 10)
+            }
+            .widgetURL(artworkUrl)
+            .background(Color.white)
+        }
     }
 }
 
 struct FeaturedArtworks_SmallView_Previews: PreviewProvider {
-    static var previews: some View {
-        FeaturedArtworks_SmallView()
+    static var previews: some SwiftUI.View {
+        let entry = FeaturedArtworks.Entry.fallback()
+        let families = FeaturedArtworks.SmallView.supportedFamilies
+        
+        Group {
+            ForEach(families, id: \.self) { family in
+                FeaturedArtworks.SmallView(entry: entry)
+                    .previewContext(WidgetPreviewContext(family: family))
+            }
+        }
     }
 }

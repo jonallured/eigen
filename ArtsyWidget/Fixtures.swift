@@ -50,7 +50,7 @@ extension Fixtures {
     static var secondaryArtwork: Artwork {
         let artist = Artist(name: "René Magritte")
         let artworkImage = ArtworkImage(imageUrl: "https://d32dm0rphc51dk.cloudfront.net/qX0FwYdx5eGxF7cx8V6fkw/:version.jpg")
-        let image = UIImage(named: "SecondarArtworkImage")!
+        let image = UIImage(named: "SecondaryArtworkImage")!
         let artwork = Artwork(
             artist: artist,
             artworkImages: [artworkImage],

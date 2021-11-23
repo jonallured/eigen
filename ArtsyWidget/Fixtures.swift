@@ -32,6 +32,46 @@ import UIKit
 enum Fixtures {}
 
 extension Fixtures {
+    static var primaryArticle: Article {
+        let image = UIImage(named: "PrimaryArticleImage")!
+        var article = Article()
+        article.title = "5 Things to Know about Collecting Figurative Paintings"
+        article.url = "https://www.artsy.net/article/artsy-editorial-5-things-collecting-figurative-paintings"
+        article.image = image
+
+        return article
+    }
+    
+    static var secondaryArticle: Article {
+        let image = UIImage(named: "SecondaryArticleImage")!
+        var article = Article()
+        article.title = "The New Collector’s Guide to Understanding Art Pricing"
+        article.url = "https://www.artsy.net/article/artsy-editorial-new-collectors-guide-understanding-art-pricing"
+        article.image = image
+
+        return article
+    }
+    
+    static var tertiaryArticle: Article {
+        let image = UIImage(named: "TertiaryArticleImage")!
+        var article = Article()
+        article.title = "How 9 Artsy Vanguard Alumni Have Become Leading Contemporary Artists"
+        article.url = "https://www.artsy.net/article/artsy-editorial-9-artsy-vanguard-alumni-leading-contemporary-artists"
+        article.image = image
+
+        return article
+    }
+    
+    static var quaternaryArticle: Article {
+        let image = UIImage(named: "QuaternaryArticleImage")!
+        var article = Article()
+        article.title = "Artsy Insider: Frieze Week’s Breakout Artists"
+        article.url = "https://www.artsy.net/article/artsy-editorial-artsy-insider-frieze-weeks-breakout-artists"
+        article.image = image
+
+        return article
+    }
+    
     static var primaryArtwork: Artwork {
         let artist = Artist(name: "Alex Katz")
         let artworkImage = ArtworkImage(imageUrl: "https://d32dm0rphc51dk.cloudfront.net/pd7rW3I1mXhW0vbAJDVm3Q/:version.jpg")

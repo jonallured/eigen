@@ -101,6 +101,8 @@ export const SavedSearchAlertForm: React.FC<SavedSearchAlertFormProps> = (props)
          *  - the user previously opted out of all marketing emails
          */
         if (!userAllowsEmails && !initialValues.email && values.email) {
+          // this should be custom_alerts and should use the new
+          // /api/v1/notification_preferences endpoint in gravity there's already a mutation in MP so this likly just needs to be moved to that appraoch instead
           await updateEmailFrequency("alerts_only")
         }
 

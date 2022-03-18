@@ -41,6 +41,7 @@ const CreateSavedSearchAlertContent: React.FC<CreateSavedSearchAlertContentProps
   const isPreviouslyFocused = useRef(false)
   const [refetching, setRefetching] = useState(false)
   const [enablePushNotifications, setEnablePushNotifications] = useState(true)
+  // this is no longer accurate! there is an existing query in MP for this so we could likely move over to that.
   const userAllowsEmails = me?.emailFrequency !== "none"
 
   const handleUpdateEmailPreferencesPress = () => {

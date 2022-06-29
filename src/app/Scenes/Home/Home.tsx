@@ -1,4 +1,5 @@
 import { Home_articlesConnection$data } from "__generated__/Home_articlesConnection.graphql"
+import { Home_artworksForUser$data } from "__generated__/Home_artworksForUser.graphql"
 import { Home_featured$data } from "__generated__/Home_featured.graphql"
 import { Home_homePageAbove$data } from "__generated__/Home_homePageAbove.graphql"
 import { Home_homePageBelow$data } from "__generated__/Home_homePageBelow.graphql"
@@ -40,6 +41,7 @@ import { articlesQueryVariables } from "../Articles/Articles"
 import { lotsByArtistsYouFollowDefaultVariables } from "../LotsByArtistsYouFollow/LotsByArtistsYouFollow"
 import { ViewingRoomsHomeMainRail } from "../ViewingRoom/Components/ViewingRoomsHomeRail"
 import { ArticlesRailFragmentContainer } from "./Components/ArticlesRail"
+import { ArtworksForUserRailFragmentContainer } from "./Components/ArtworksForUserRail"
 import { ArtworkRecommendationsRail } from "./Components/ArtworkRecommendationsRail"
 import { HomeHeroContainer } from "./Components/HomeHero"
 import { NewWorksForYouRail } from "./Components/NewWorksForYouRail"
@@ -61,6 +63,7 @@ interface HomeModule {
 
 interface Props extends ViewProps {
   articlesConnection: Home_articlesConnection$data | null
+  artworksForUser: Home_artworksForUser$data | null
   showsByFollowedArtists: Home_showsByFollowedArtists$data | null
   featured: Home_featured$data | null
   homePageAbove: Home_homePageAbove$data | null
@@ -87,6 +90,7 @@ const Home = (props: Props) => {
     meAbove,
     meBelow,
     articlesConnection,
+    artworksForUser,
     showsByFollowedArtists,
     featured,
     loading,
@@ -98,6 +102,11 @@ const Home = (props: Props) => {
   // Make sure to include enough modules in the above-the-fold query to cover the whole screen!.
   let modules: HomeModule[] = compact([
     // Above-The-Fold Modules
+    {
+      title: "OMG",
+      type: "artworksForUser",
+      data: artworksForUser,
+    },
     {
       title: "New Works for You",
       type: "newWorksForYou",
@@ -207,6 +216,15 @@ const Home = (props: Props) => {
             }
 
             switch (item.type) {
+              case "artworksForUser":
+                return (
+                  <ArtworksForUserRailFragmentContainer
+                    title={item.title}
+                    artworksForUser={item.data}
+                    scrollRef={scrollRefs.current[index]}
+                    mb={MODULE_SEPARATOR_HEIGHT}
+                  />
+                )
               case "articles":
                 return (
                   <ArticlesRailFragmentContainer
@@ -441,6 +459,11 @@ export const HomeFragmentContainer = createRefetchContainer(
         ...ArticlesRail_articlesConnection
       }
     `,
+    artworksForUser: graphql`
+      fragment Home_artworksForUser on ArtworkConnection {
+        ...ArtworksForUserRail_artworksForUser
+      }
+    `,
     showsByFollowedArtists: graphql`
       fragment Home_showsByFollowedArtists on ShowConnection {
         ...ShowsRail_showsConnection
@@ -477,6 +500,9 @@ export const HomeFragmentContainer = createRefetchContainer(
       }
       articlesConnection(first: 10, sort: PUBLISHED_AT_DESC, inEditorialFeed: true) @optionalField {
         ...Home_articlesConnection
+      }
+      artworksForUser(first: 20, includeBackfill: true) @optionalField {
+        ...Home_artworksForUser
       }
     }
   `
@@ -635,6 +661,9 @@ export const HomeQueryRenderer: React.FC = () => {
               @optionalField {
               ...Home_articlesConnection
             }
+            artworksForUser(first: 20, includeBackfill: true) @optionalField {
+              ...Home_artworksForUser
+            }
           }
         `,
         variables: { heroImageVersion: isPad() ? "WIDE" : "NARROW" },
@@ -669,6 +698,7 @@ export const HomeQueryRenderer: React.FC = () => {
           return (
             <HomeFragmentContainer
               articlesConnection={above?.articlesConnection ?? null}
+              artworksForUser={above?.artworksForUser ?? null}
               showsByFollowedArtists={below?.me?.showsByFollowedArtists ?? null}
               featured={below ? below.featured : null}
               homePageAbove={above.homePage}

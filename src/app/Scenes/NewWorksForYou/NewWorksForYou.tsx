@@ -53,8 +53,12 @@ export const NewWorksForYouFragmentContainer = createPaginationContainer(
     viewer: graphql`
       fragment NewWorksForYou_viewer on Viewer
       @argumentDefinitions(count: { type: "Int", defaultValue: 10 }, cursor: { type: "String" }) {
-        artworks: artworksForUser(after: $cursor, first: $count, includeBackfill: true)
-          @connection(key: "NewWorksForYou_artworks") {
+        artworks: artworksForUser(
+          after: $cursor
+          first: $count
+          includeBackfill: true
+          maxWorksPerArtist: 3
+        ) @connection(key: "NewWorksForYou_artworks") {
           edges {
             node {
               id

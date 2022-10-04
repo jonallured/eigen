@@ -1,3 +1,4 @@
+import { Cards } from "./Components/Cards"
 import { Home_articlesConnection$data } from "__generated__/Home_articlesConnection.graphql"
 import { Home_featured$data } from "__generated__/Home_featured.graphql"
 import { Home_homePageAbove$data } from "__generated__/Home_homePageAbove.graphql"
@@ -102,6 +103,12 @@ const Home = (props: Props) => {
   // Make sure to include enough modules in the above-the-fold query to cover the whole screen!.
   let modules: HomeModule[] = compact([
     // Above-The-Fold Modules
+    {
+      title: "",
+      type: "contentCards",
+      data: {},
+      prefetchUrl: "",
+    },
     {
       title: "New Works for You",
       type: "newWorksForYou",
@@ -211,6 +218,8 @@ const Home = (props: Props) => {
             }
 
             switch (item.type) {
+              case "contentCards":
+                return <Cards />
               case "articles":
                 return (
                   <ArticlesRailFragmentContainer

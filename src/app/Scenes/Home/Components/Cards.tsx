@@ -43,11 +43,16 @@ export const Cards: React.FC = () => {
   const [viewedCards, setViewedCards] = useState([] as ReactAppboy.CaptionedContentCard[])
 
   useEffect(() => {
-    const listener = ReactAppboy.addListener(ReactAppboy.Events.CONTENT_CARDS_UPDATED, async () => {
+    const eventName = ReactAppboy.Events.CONTENT_CARDS_UPDATED
+    const callback = async () => {
       const updatedCards = await ReactAppboy.getContentCards()
-      setCards(updatedCards as ReactAppboy.CaptionedContentCard[])
-    })
+      const sortedCards = updatedCards.sort((lhs, rhs) =>
+        lhs.extras.position > rhs.extras.position ? 1 : -1
+      )
+      setCards(sortedCards as ReactAppboy.CaptionedContentCard[])
+    }
 
+    const listener = ReactAppboy.addListener(eventName, callback)
     ReactAppboy.requestContentCardsRefresh()
 
     return () => {

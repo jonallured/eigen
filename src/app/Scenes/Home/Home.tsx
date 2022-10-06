@@ -47,7 +47,6 @@ import { ArtworkRecommendationsRail } from "./Components/ArtworkRecommendationsR
 import { HomeHeader } from "./Components/HomeHeader"
 import { NewWorksForYouRail } from "./Components/NewWorksForYouRail"
 import { ShowsRailFragmentContainer } from "./Components/ShowsRail"
-import { TroveFragmentContainer } from "./Components/Trove"
 import { RailScrollRef } from "./Components/types"
 
 const MODULE_SEPARATOR_HEIGHT = 6
@@ -155,7 +154,6 @@ const Home = (props: Props) => {
       type: "shows",
       data: showsByFollowedArtists,
     },
-    { title: "Trove", type: "trove", data: homePageBelow },
     {
       title: "Viewing Rooms",
       type: "viewing-rooms",
@@ -325,9 +323,6 @@ const Home = (props: Props) => {
                     mb={MODULE_SEPARATOR_HEIGHT}
                   />
                 )
-
-              case "trove":
-                return <TroveFragmentContainer trove={item.data} mb={MODULE_SEPARATOR_HEIGHT} />
               case "viewing-rooms":
                 return (
                   <ViewingRoomsHomeMainRail
@@ -416,7 +411,6 @@ export const HomeFragmentContainer = createRefetchContainer(
         marketingCollectionsModule {
           ...CollectionsRail_collectionsModule
         }
-        ...Trove_trove @arguments(heroImageVersion: $heroImageVersion)
       }
     `,
     meAbove: graphql`

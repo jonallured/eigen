@@ -391,8 +391,7 @@ export const HomeFragmentContainer = createRefetchContainer(
     `,
     // Make sure to exclude all modules that are part of "homePageAbove"
     homePageBelow: graphql`
-      fragment Home_homePageBelow on HomePage
-      @argumentDefinitions(heroImageVersion: { type: "HomePageHeroUnitImageVersion" }) {
+      fragment Home_homePageBelow on HomePage @argumentDefinitions {
         recentlyViewedWorksArtworkModule: artworkModule(key: RECENTLY_VIEWED_WORKS) {
           id
           ...ArtworkModuleRail_rail
@@ -449,12 +448,12 @@ export const HomeFragmentContainer = createRefetchContainer(
     `,
   },
   graphql`
-    query HomeRefetchQuery($heroImageVersion: HomePageHeroUnitImageVersion!) {
+    query HomeRefetchQuery {
       homePage @optionalField {
         ...Home_homePageAbove
       }
       homePageBelow: homePage @optionalField {
-        ...Home_homePageBelow @arguments(heroImageVersion: $heroImageVersion)
+        ...Home_homePageBelow
       }
       me @optionalField {
         ...Home_meAbove
@@ -525,7 +524,7 @@ const HomePlaceholder: React.FC = () => {
           <ActivityIndicator hasNotifications={false} />
         </Flex>
       </Box>
-      <Spacer mb={4} />
+      <Spacer mb={2} />
 
       {
         // Small tiles to mimic the artwork rails
@@ -642,12 +641,12 @@ export const HomeQueryRenderer: React.FC = () => {
       }}
       below={{
         query: graphql`
-          query HomeBelowTheFoldQuery($heroImageVersion: HomePageHeroUnitImageVersion) {
+          query HomeBelowTheFoldQuery {
             newWorksForYou: viewer @optionalField {
               ...Home_newWorksForYou
             }
             homePage @optionalField {
-              ...Home_homePageBelow @arguments(heroImageVersion: $heroImageVersion)
+              ...Home_homePageBelow
             }
             featured: viewingRooms(featured: true) @optionalField {
               ...Home_featured

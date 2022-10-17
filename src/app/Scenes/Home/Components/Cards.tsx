@@ -12,7 +12,7 @@ interface CardProps {
 
 const Card: React.FC<CardProps> = ({ item }) => {
   const { width: screenWidth } = useScreenDimensions()
-  const height = 500
+  const height = 460
   const width = screenWidth - 80
   const handlePress = () => {
     ReactAppboy.logContentCardClicked(item.id)

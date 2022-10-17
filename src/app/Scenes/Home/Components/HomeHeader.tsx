@@ -14,11 +14,8 @@ export const HomeHeader: React.FC<HomeHeaderProps> = ({ me }) => {
   return (
     <Box mb={1} mt={2}>
       <Flex alignItems="center">
-        <ArtsyLogoIcon scale={0.75} />
         <ActivityIndicator hasNotifications={hasNotifications} />
       </Flex>
-      <Spacer mb="15px" />
-      <Spacer mb="2" />
     </Box>
   )
 }

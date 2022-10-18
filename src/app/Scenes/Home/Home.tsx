@@ -103,16 +103,16 @@ const Home = (props: Props) => {
   let modules: HomeModule[] = compact([
     // Above-The-Fold Modules
     {
-      title: "",
-      type: "contentCards",
-      data: {},
-      prefetchUrl: "",
-    },
-    {
       title: "New Works for You",
       type: "newWorksForYou",
       data: newWorksForYou,
       prefetchUrl: "/new-works-for-you",
+    },
+    {
+      title: "",
+      type: "contentCards",
+      data: {},
+      prefetchUrl: "",
     },
     { title: "Your Active Bids", type: "artwork", data: homePageAbove?.activeBidsArtworkModule },
     {

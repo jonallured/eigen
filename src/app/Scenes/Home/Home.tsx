@@ -47,6 +47,7 @@ import { HomeHeader } from "./Components/HomeHeader"
 import { NewWorksForYouRail } from "./Components/NewWorksForYouRail"
 import { ShowsRailFragmentContainer } from "./Components/ShowsRail"
 import { RailScrollRef } from "./Components/types"
+import { ContentCards } from "./Components/ContentCards"
 
 const MODULE_SEPARATOR_HEIGHT = 6
 
@@ -106,6 +107,12 @@ const Home = (props: Props) => {
       type: "newWorksForYou",
       data: newWorksForYou,
       prefetchUrl: "/new-works-for-you",
+    },
+    {
+      title: "",
+      type: "contentCards",
+      data: {},
+      prefetchUrl: "",
     },
     { title: "Your Active Bids", type: "artwork", data: homePageAbove?.activeBidsArtworkModule },
     {
@@ -209,6 +216,8 @@ const Home = (props: Props) => {
             }
 
             switch (item.type) {
+              case "contentCards":
+                return <ContentCards />
               case "articles":
                 return (
                   <ArticlesRailFragmentContainer

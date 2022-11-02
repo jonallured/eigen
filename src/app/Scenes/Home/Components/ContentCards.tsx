@@ -2,7 +2,7 @@ import OpaqueImageView from "app/Components/OpaqueImageView/OpaqueImageView"
 import { navigate } from "app/navigation/navigate"
 import { Box, Button, Flex, Spacer, Text, Touchable } from "palette"
 import React, { useEffect, useRef, useState } from "react"
-import { FlatList, ViewabilityConfig } from "react-native"
+import { PixelRatio, FlatList, ViewabilityConfig } from "react-native"
 import ReactAppboy from "react-native-appboy-sdk"
 import { useScreenDimensions } from "shared/hooks"
 import { PaginationDots } from "./PaginationDots"
@@ -11,8 +11,10 @@ interface CardProps {
   item: ReactAppboy.CaptionedContentCard
 }
 
-const CARD_HEIGHT = 250
-const CARD_IMAGE_WIDTH = 125
+const fontScale = PixelRatio.getFontScale()
+
+const CARD_HEIGHT = 250 * fontScale
+const CARD_IMAGE_WIDTH = CARD_HEIGHT / 2
 
 const ContentCard: React.FC<CardProps> = ({ item }) => {
   const { width: screenWidth } = useScreenDimensions()
